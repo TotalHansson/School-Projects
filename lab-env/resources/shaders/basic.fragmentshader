@@ -1,0 +1,13 @@
+#version 330 core
+
+// Interpolated input from vertex shader
+in vec3 Color;
+
+// Output color for the pixel
+out vec3 pColor;
+
+
+void main()
+{
+	pColor = Color;
+}

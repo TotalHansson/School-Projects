@@ -1,0 +1,1 @@
+This is where the cmake rules will place debug binaries per default

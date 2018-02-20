@@ -6,7 +6,8 @@
 * OpenGL 4.0+
 
 1. Run `CMake ..` from *lab-env/build* folder
-2. Executable is added to *lab-env/bin* (Set *lab-env/bin* as working directory if running from a debugger)
+2. Build project with your favorite compiler
+3. Executables are added to *lab-env/bin* (Set *lab-env/bin* as working directory if running from a debugger)
 
 
 ## Catmull-Clark Subdivision

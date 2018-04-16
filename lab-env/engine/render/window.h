@@ -23,6 +23,11 @@ public:
 
 	/// set size of window
 	void SetSize(int32 width, int32 height);
+	/// get height of window
+	int GetHeight();
+	/// get width of window
+	int GetWidth();
+
 	/// set title of window
 	void SetTitle(const std::string& title);
 
@@ -109,6 +114,16 @@ Window::SetSize(int32 width, int32 height)
 	this->width = width;
 	this->height = height;
 	if (nullptr != this->window) this->Resize();
+}
+
+inline int Window::GetHeight()
+{
+	return this->height;
+}
+
+inline int Window::GetWidth()
+{
+	return this->width;
 }
 
 //------------------------------------------------------------------------------

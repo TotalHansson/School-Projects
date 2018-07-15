@@ -49,8 +49,6 @@ public:
 				// The AABBs are overlaping, check OBB
 				possibleCollisions.push_back(gameObjects[i]);
 				possibleCollisions.push_back(gameObjects[j]);
-				// bool collision = GJK::GJKIntersect(gameObjects[i], gameObjects[j]);
-				// fprintf(stderr, "AABB: true,  OBB: %i\n", collision);
 			}
 		}
 	}

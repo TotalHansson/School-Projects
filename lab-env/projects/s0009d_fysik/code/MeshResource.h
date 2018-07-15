@@ -98,6 +98,11 @@ public:
 		int indiceCounter = 0;
 		//std::vector<int> indices;
 
+
+		/*
+			I don't know what this parser is....
+			It's a horrible monster that should be burned. There is a better one in the ray tracing project
+		*/
 		//Loop through obj file
 		while (!fileStream.eof()) 
 		{

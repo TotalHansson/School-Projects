@@ -44,45 +44,17 @@ ExampleApp::Open()
 		if (key == GLFW_KEY_W && action == GLFW_PRESS)
 		{
 			gameObjects[0]->rigidBody->AddForce(Vector3D(0, 10.0f, 0));
-			// tmpRotation.translateTo(tmpRotation[3], tmpRotation[7], tmpRotation[11] - 0.05f);
-			// Matrix3D rot = Matrix3D('x', 10);
-			// quadTransform[0] = quadTransform[0] * rot;
-			// q->UpdatePose(quadTransform[0]);
-
-			// fprintf(stderr, "Mid (%5.2f, %5.2f, %5.2f)\tNormal (%5.2f, %5.2f, %5.2f)\n", q->p->point[0], q->p->point[1], q->p->point[2],
-			// q->p->normal[0], q->p->normal[1], q->p->normal[2]);
 		}
 		else if (key == GLFW_KEY_S && action == GLFW_PRESS)
 		{
-			// tmpRotation.translateTo(tmpRotation[3], tmpRotation[7], tmpRotation[11] + 0.05f);
-			// Matrix3D rot = Matrix3D('x', -10);
-			// quadTransform[0] = quadTransform[0] * rot;
-			// q->UpdatePose(quadTransform[0]);
-
-			// fprintf(stderr, "Mid (%5.2f, %5.2f, %5.2f)\tNormal (%5.2f, %5.2f, %5.2f)\n", q->p->point[0], q->p->point[1], q->p->point[2],
-			// q->p->normal[0], q->p->normal[1], q->p->normal[2]);
 		}
 
 
-		// A and D to rotate the root
 		if (key == GLFW_KEY_D && action == GLFW_PRESS)
 		{
-			// Matrix3D rot = Matrix3D('z', 10);
-			// quadTransform[0] = quadTransform[0] * rot;
-			// q->UpdatePose(quadTransform[0]);
-
-
-			// fprintf(stderr, "Mid (%5.2f, %5.2f, %5.2f)\tNormal (%5.2f, %5.2f, %5.2f)\n", q->p->point[0], q->p->point[1], q->p->point[2],
-			// q->p->normal[0], q->p->normal[1], q->p->normal[2]);
 		}
 		else if (key == GLFW_KEY_A && action == GLFW_PRESS)
 		{
-			// Matrix3D rot = Matrix3D('z', -10);
-			// quadTransform[0] = quadTransform[0] * rot;
-			// q->UpdatePose(quadTransform[0]);
-
-			// fprintf(stderr, "Mid (%5.2f, %5.2f, %5.2f)\tNormal (%5.2f, %5.2f, %5.2f)\n", q->p->point[0], q->p->point[1], q->p->point[2],
-			// q->p->normal[0], q->p->normal[1], q->p->normal[2]);
 		}
 
 
@@ -117,14 +89,15 @@ ExampleApp::Open()
 
 	window->SetMousePressFunction([this](int32 button, int32 action, int32 mods)
 	{
+		// Left click
 		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 			lClicking = true;
 		else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
 			lClicking = false;
 
+		// Right click
 		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
 		{
-			
 			ShootRay();
 			
 			rClicking = true;
@@ -142,15 +115,9 @@ ExampleApp::Open()
 
 	window->SetMouseMoveFunction([this](float64 x, float64 y)
 	{
-		// fprintf(stderr, "x: %f\ty: %f\n", x, y);
+		// Rotate the camera while holding the left mouse button
 		if (lClicking)
 		{
-			// this->hCameraAngle -= (x-oldX) * 0.01f;
-
-			// this->axisTransform = Matrix3D('x', 10.0f);
-			// this->axisTransform = this->axisTransform * Matrix3D('y', this->hCameraAngle * 180.0f / PI).invert();
-			// this->axisTransform.translateTo(-1.1f, -1.2f, -3.0f);
-
 			this->hCameraAngle -= (x-oldX) * mouseSpeed;
 			this->vCameraAngle -= (y-oldY) * mouseSpeed;
 
@@ -158,15 +125,10 @@ ExampleApp::Open()
 				vCameraAngle = -80.0f;
 			else if(vCameraAngle > 80.0f)
 				vCameraAngle = 80.0f;
-
-			// fprintf(stderr, "h %f, v %f\n", hCameraAngle, vCameraAngle);
 		}
 
 		if (rClicking)
-		{	
-			// tmpRotation = tmpRotation * Matrix3D('y', 0.01f * (x-oldX));
-			// Vector3D currPos = this->gameObjects[0]->rigidBody->GetPosition();
-			// this->gameObjects[0]->rigidBody->SetPosition(currPos + Vector3D((x-oldX)*0.01f, -(y-oldY)*0.01f,0));
+		{
 		}
 
 		oldX = x;
@@ -223,10 +185,9 @@ ExampleApp::Open()
 		// Game objects
 		//-----------------------------------------------------------------------------------------
 
-		// Main monkey that can be interacted with
+		// Main object that can be interacted with
 		GameObject *newGameObject = new GameObject("../resources/models/tris/goStone.obj", "../resources/textures/blue.png");
 		// GameObject *newGameObject = new GameObject("../resources/models/tris/cube.obj", "../resources/textures/blue.png");
-		// GameObject *newGameObject = new GameObject();
 		newGameObject->rigidBody->SetMass(2.0f);
 
 		// Initial values
@@ -238,7 +199,8 @@ ExampleApp::Open()
 		gameObjects.push_back(newGameObject);
 
 
-		
+
+		// Object 2 that will be collided with mid air
 		GameObject *newGameObject2 = new GameObject("../resources/models/tris/goStone.obj", "../resources/textures/blue.png");
 		// GameObject *newGameObject2 = new GameObject("../resources/models/tris/cube.obj", "../resources/textures/blue.png");
 		newGameObject2->rigidBody->SetMass(2.0f);
@@ -256,13 +218,9 @@ ExampleApp::Open()
 		// Floor
 		GameObject *newGameObject3 = new GameObject("../resources/models/tris/floor_large.obj", "../resources/textures/gray.png");
 		newGameObject3->rigidBody->SetPosition(Vector3D(0, -0.75f, 0));
-
-		// tmpRotation = Matrix3D('z', 45.0f);
-		// tmpRotation = tmpRotation * Matrix3D('y', 45.0f);
-		// newGameObject3->rigidBody->R = newGameObject3->rigidBody->R * tmpRotation;
 		
 		newGameObject3->rigidBody->Update(0);
-		newGameObject3->rigidBody->SetStatic(true);
+		newGameObject3->rigidBody->SetStatic(true); // Floor is not affected by physics
 		gameObjects.push_back(newGameObject3);
 
 
@@ -319,7 +277,6 @@ ExampleApp::Run()
 {
 	Matrix3D id;
 
-
 	Vector3D camPos   (0.0f, 0.0f, 1.0f, 0.0f);
 	Vector3D camRight (1.0f, 0.0f, 0.0f, 0.0f);
 	Vector3D camUp 	  (0.0f, 1.0f, 0.0f, 0.0f);
@@ -332,7 +289,7 @@ ExampleApp::Run()
 	intersectMarkerMatrix.scale(0.5f);
 
 
-	// Set the light for the gray texture
+	// Set the light for the gray texture (it's static, so no need to update it)
 	gn[3].setLight(light);
 
 
@@ -380,20 +337,17 @@ ExampleApp::Run()
 
 
 		// Create the view matrix
-		this->camera =  Matrix3D(
-		 					this->cameraPosition,	// Camera position
-							this->cameraLookAt,		// Looking at
-							camUp					// Up
-						);
+		this->camera = Matrix3D(
+		 	this->cameraPosition,	// Camera position
+			this->cameraLookAt,		// Looking at
+			camUp					// Up
+		);
 
 
 		
 		// Move all GameObjects
 		for (unsigned int i = 0; i < this->gameObjects.size(); i++)
 		{
-			// this->gameObjects[i]->rigidBody->AddForce(Vector3D(0, -9.82f, 0));
-
-
 			// Physics
 			this->gameObjects[i]->Update(dt);
 		}
@@ -404,6 +358,7 @@ ExampleApp::Run()
 		std::vector<GameObject*> possibleCollisions;
 		LineSweep::FindOverlapingAABB(this->gameObjects, possibleCollisions);
 
+		// Loop over all possible collisions
 		for (unsigned int i = 0; i < possibleCollisions.size(); i += 2)
 		{
 			GameObject *A = possibleCollisions[i];
@@ -417,20 +372,23 @@ ExampleApp::Run()
 			{
 				this->intersectionPoint = info.worldPosition;
 
-				// coefficient of restitution (elasticity). 1 = perfect bounce, 0 = no bounce
-				// should exists as a value on objects. Get the lowest of the two
+				// Coefficient of restitution (elasticity). 1 = perfect bounce, 0 = no bounce
+				// Should be a value on the GameObjects. Get the lowest of the two
 				float e = 0.5f;
 
 
 				Vector3D normal = info.collisionNormal;
 
 				// Separeate the objects
+				// if B is static, move only A
 				if(!A->rigidBody->IsStatic() && B->rigidBody->IsStatic())
 					A->rigidBody->SetPosition(A->rigidBody->GetPosition() + normal * info.penetrationDepth);
 
+				// if A is static, move only B
 				else if(A->rigidBody->IsStatic() && !B->rigidBody->IsStatic())
 					B->rigidBody->SetPosition(B->rigidBody->GetPosition() - normal * info.penetrationDepth);
 
+				// if neither is static, move both
 				else if (!A->rigidBody->IsStatic() && !B->rigidBody->IsStatic())
 				{
 					A->rigidBody->SetPosition(A->rigidBody->GetPosition() + normal * info.penetrationDepth * 0.5f);
@@ -455,13 +413,6 @@ ExampleApp::Run()
 
 
 				float vn = fminf(0.0f, relativeVelocity.dot3(normal));
-				// float vn2 = fminf(0.0f, velocity2.dot3(normal));
-
-
-
-				// Object vs Static
-				// float k = iMass + (iInertia * r.cross(normal).cross(r)).dot3(normal);
-				// float j = -(1 + e) * velocity.dot3(normal) / k;
 
 
 				// Object vs object
@@ -470,7 +421,6 @@ ExampleApp::Run()
 						   iInertia2 * r2.cross(normal).cross(r2)).dot3(normal);
 
 				float j1 = -(1+e) * vn / k;
-				// float j2 = (1+e) * vn / k;
 
 
 				// Apply impulse
@@ -515,9 +465,6 @@ ExampleApp::Run()
 					// Apply the friction
 					A->rigidBody->AddForce(jt * tangent);
 					A->rigidBody->AddAngularMomentum(jt * r1.cross(tangent));
-
-					// B->rigidBody->AddForce(-jt * tangent);
-					// B->rigidBody->AddAngularMomentum(-jt * r2.cross(tangent));
 				}
 				if (tangentVelocity2.squareLength() > epsilon * epsilon)
 				{
@@ -570,24 +517,24 @@ ExampleApp::Run()
 		gn[2].transform(id, this->camera, this->projection);
 		gn[2].getTexture()->bindTexture();
 
-		// Draw the last ray
+		// Draw the last ray cast
 		if(this->ray != nullptr && (this->intersectionPoint[0] != 10000.0f && this->intersectionPoint[1] != 0.0f && this->intersectionPoint[2] != 0.0f))
 		{
 			Vector3D startPoint = this->ray->start;
 			Vector3D endPoint = startPoint + this->ray->direction * 100.0f;
+
+			// glBegin should not be used... but it's a quick solution for now
 			glBegin(GL_LINES);
 				glVertex3f(startPoint[0], startPoint[1], startPoint[2]);
 				glVertex3f(endPoint[0], endPoint[1], endPoint[2]);
 			glEnd();
 		}
+
 		// Render the intersection point
-		if (this->intersectionPoint[0] != 10000.0f && this->intersectionPoint[1] != 0.0f && this->intersectionPoint[2] != 0.0f)
-		{
-			intersectMarkerMatrix.translateTo(this->intersectionPoint[0], this->intersectionPoint[1], this->intersectionPoint[2]);
-			intersectMarker->setLight(light);
-			intersectMarker->transform(intersectMarkerMatrix, this->camera, this->projection);
-			intersectMarker->draw();
-		}
+		intersectMarkerMatrix.translateTo(this->intersectionPoint[0], this->intersectionPoint[1], this->intersectionPoint[2]);
+		intersectMarker->setLight(light);
+		intersectMarker->transform(intersectMarkerMatrix, this->camera, this->projection);
+		intersectMarker->draw();
 
 
 		// Render light model
@@ -628,7 +575,7 @@ ExampleApp::Run()
 void
 ExampleApp::DrawGrid()
 {
-	// Use the program for gray
+	// Use the shader program for gray
 	gn[3].transform(Vector3D(), this->camera, this->projection);
 	gn[3].getTexture()->bindTexture();
 
@@ -669,17 +616,11 @@ ExampleApp::DrawAABB(GameObject *go)
 	this->gn[0].setLight(this->light);
 	this->gn[0].transform(Vector3D(), this->camera, this->projection);
 	this->gn[0].getTexture()->bindTexture();
-
-	// Save current polygon mode
-	/*GLint renderMode;
-	glGetIntegerv(GL_POLYGON_MODE, &renderMode);*/
 	
 	const Vector3D *aabb = go->aabb;
 	Vector3D min = aabb[0];
 	Vector3D max = aabb[1];
 	
-	// glLineWidth(2.5f);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_QUAD_STRIP);
 		glVertex3f(min[0], min[1], min[2]); // left down back
 		glVertex3f(min[0], max[1], min[2]); // left up back
@@ -696,8 +637,6 @@ ExampleApp::DrawAABB(GameObject *go)
 		glVertex3f(min[0], min[1], min[2]); // left down back
 		glVertex3f(min[0], max[1], min[2]); // left up back
 	glEnd();
-
-	//glPolygonMode(GL_FRONT_AND_BACK, renderMode);
 }
 
 //------------------------------------------------------------------------------
@@ -711,10 +650,6 @@ ExampleApp::DrawOBB(GameObject *go)
 	gn[1].transform(Vector3D(), this->camera, this->projection);
 	gn[1].getTexture()->bindTexture();
 
-	// Save current polygon mode
-	/*GLint renderMode;
-	glGetIntegerv(GL_POLYGON_MODE, &renderMode);*/
-
 	const Vector3D *obb = go->graphicsNode->getMesh()->getBoundingBox();
 	Vector3D box[8];
 	Matrix3D transform = go->rigidBody->GetTransform();
@@ -723,7 +658,6 @@ ExampleApp::DrawOBB(GameObject *go)
 		box[i] = transform * obb[i];
 	}
 
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_QUAD_STRIP);
 		glVertex3f(box[0][0], box[0][1], box[0][2]); // left down back
 		glVertex3f(box[1][0], box[1][1], box[1][2]); // left up back
@@ -736,8 +670,6 @@ ExampleApp::DrawOBB(GameObject *go)
 		glVertex3f(box[0][0], box[0][1], box[0][2]); // left down back
 		glVertex3f(box[1][0], box[1][1], box[1][2]); // left up back
 	glEnd();
-
-	//glPolygonMode(GL_FRONT_AND_BACK, renderMode);
 }
 
 //------------------------------------------------------------------------------

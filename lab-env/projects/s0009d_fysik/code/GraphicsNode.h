@@ -50,14 +50,6 @@ public:
 	{
 		this->shader->useProgram();
 
-		// Matrix3D projection(50, 1.0f, 100.0f);
-
-		// Matrix3D view = Matrix3D(
-		// 					Vector3D(-1, 0, 4),	// Camera position
-		// 					Vector3D(-1, 0, 0),	// Looking at
-		// 					Vector3D(0, 1, 0)	// Up
-		// 				);
-
 		Matrix3D MVP = projection * view * modelPosition;
 		Matrix3D MV = view * modelPosition;
 		
@@ -80,14 +72,7 @@ public:
 		this->shader->modifyFloat(light.intensity, "lightIntensity");
 	}
 
-	// Vector3D* getBoundingBox()
-	// {
-	// 	return this->mesh->getBoundingBox();
-	// }
-	// Vector3D getCenterOfMass()
-	// {
-	// 	return this->mesh->getCenterOfMass();
-	// }
+
 	std::shared_ptr<MeshResource> getMesh()
 	{
 		return this->mesh;

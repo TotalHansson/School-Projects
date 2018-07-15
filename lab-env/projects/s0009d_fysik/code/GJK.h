@@ -42,15 +42,6 @@ public:
 		return pos;
 	}
 
-	// static Vector3D Support(const Vector3D direction, const GameObject *A, const GameObject *B)
-	// {
-	// 	Vector3D p1 = MaxPointAlongDirection( direction, A);
-	// 	Vector3D p2 = MaxPointAlongDirection(-direction, B);
-	// 	Vector3D p3 = p1 - p2;
-
-	// 	return p3;
-	// }
-
 
 	static bool TestOneFace(std::vector<Point> &list, Vector3D &direction,
 		Vector3D &ab, Vector3D &ac, Vector3D &ao, Vector3D &abc)
